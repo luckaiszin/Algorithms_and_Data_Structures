@@ -122,6 +122,15 @@ Se a casa for demolida, o endereço no cartão continua o mesmo, mas se você te
 ir até lá, não encontrará o que esperava. Você estará acessando um local que não "te pertence" mais.
 */
 
+/*
+// C++ Style
+int* ptr = new int(10); // Aloca um int e já inicializa com 10
+delete ptr;             // Libera a memória
+
+int* array = new int[5]; // Aloca um array de 5 inteiros
+delete[] array;          // Nota: para arrays, usamos delete[]
+*/
+
 int main(void){
 
     example3();
