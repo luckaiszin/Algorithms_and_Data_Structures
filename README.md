@@ -1,6 +1,6 @@
 # 🚀 Cronograma de Estudos: Estrutura de Dados, Algoritmos & NeetCode
 
-Este repositório foi criado para documentar, organizar e acompanhar a minha jornada de estudos intensivos de **Estruturas de Dados (EDF)**, **Algoritmos** e a resolução de problemas práticos na plataforma LeetCode, seguindo o roteiro consolidado do **NeetCode**.
+Este repositório foi criado para aprofundamento em **Estruturas de Dados (EDF)**, **Algoritmos** e a resolução de problemas práticos na plataforma LeetCode, seguindo o roteiro consolidado do **NeetCode**.
 
 O plano é estruturado em um formato diário de **22 dias**, conectando conceitos teóricos fundamentais com a prática de programação direta.
 
