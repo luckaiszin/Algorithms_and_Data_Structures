@@ -58,3 +58,41 @@ gcc nome_do_arquivo.c -o programa_executavel
 
 # Executando no Windows
 programa_executavel.exe
+
+# 📚 Catálogo Dinâmico em C: A Verdade Sobre os Ponteiros
+
+Este projeto implementa um sistema de catálogo de livros dinâmico. Mais do que um exercício de `structs` e `arrays`, este código é um laboratório prático para entender a arquitetura de memória do C, especificamente a relação entre **Stack**, **Heap** e o comportamento real da passagem de parâmetros.
+
+## 🤯 O Grande Aprendizado: A Ilusão da Referência
+
+O conceito mais importante documentado neste projeto é a quebra do mito da "passagem por referência" em C. 
+
+**A regra de ouro descoberta:** Em C, absolutamente tudo é passado por valor (cópia). O compilador tira uma "xerox" de qualquer parâmetro passado para uma função, **inclusive dos ponteiros**.
+
+### A Analogia do "Cartão de Visitas"
+
+
+
+Quando fazemos `livro* catalogo = malloc(...)`:
+1. **A Casa (Heap):** O `malloc` constrói o espaço para os livros na memória Heap.
+2. **O Cartão de Visitas (Stack):** A variável `catalogo` nasce na Stack do `main`. Ela não é a casa, é apenas um pedaço de papel de 8 bytes com o endereço da casa anotado (ex: `0x100`).
+
+Se passamos `catalogo` para uma função `void liberarCatalogo(livro* ptr)`:
+* O C cria um **novo cartão de visitas** na Stack da função (uma xerox).
+* O comando `free(ptr)` funciona porque a função lê a cópia do endereço, vai até a Heap e destrói os dados.
+* O comando `ptr = NULL` altera **apenas a cópia**. O cartão de visitas original no `main` continua intacto, apontando para a "casa" que acabou de ser demolida (gerando um *Dangling Pointer*).
+
+## 🛠️ As Soluções Implementadas
+
+Para garantir que o `main` saiba das mudanças na memória (como quando o `realloc` move os dados de lugar, ou quando anulamos o ponteiro após o `free`), evitamos o uso de ponteiros duplos (`**`) em favor de uma abordagem mais limpa usando **retornos**:
+
+```c
+// Em vez de tentar alterar a variável de fora (o que exigiria livro**),
+// a função retorna o novo endereço atualizado:
+livro* adicionarLivro(livro li, livro* catalogo, int* qtd, int* cap) {
+    // ... lógica com realloc ...
+    return catalogo; // Devolve o novo mapa
+}
+
+// No main, a própria variável original se atualiza com o retorno:
+catalogo = adicionarLivro(l1, catalogo, &quantidade, &capacidade);
